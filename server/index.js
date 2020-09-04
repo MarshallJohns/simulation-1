@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const massive = require('massive')
+const invCtrl = require('./controller.js')
 
 const { SERVER_PORT, CONNECTION_STRING } = process.env
 
@@ -8,6 +9,9 @@ const app = express()
 
 
 app.use(express.json())
+
+app.get('/api/inventory', invCtrl.getInventory)
+app.post('/api/product', invCtrl.addProduct)
 
 massive({
     connectionString: CONNECTION_STRING,

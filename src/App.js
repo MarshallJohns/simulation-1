@@ -9,15 +9,17 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      inventory: [{ name: 'hoodie', price: 20, imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkNm-oeOFnBp4bL17qQXuTwelXpKDSmT0Hz2eaY3PVfZI5LCaQcrmTLEmPgCEKySPakV-DiuM&usqp=CAc' }, { name: 'hoodie', price: 20, imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkNm-oeOFnBp4bL17qQXuTwelXpKDSmT0Hz2eaY3PVfZI5LCaQcrmTLEmPgCEKySPakV-DiuM&usqp=CAc' }, { name: 'hoodie', price: 20, imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkNm-oeOFnBp4bL17qQXuTwelXpKDSmT0Hz2eaY3PVfZI5LCaQcrmTLEmPgCEKySPakV-DiuM&usqp=CAc' }]
+      inventory: []
     }
   }
 
   componentDidMount() {
-
+    axios.get('/api/inventory').then(res => this.setState({ inventory: res.data }))
+      .catch(err => console.log(err.message))
   }
 
   render() {
+
     return (
       <div className="App" >
         <Header />

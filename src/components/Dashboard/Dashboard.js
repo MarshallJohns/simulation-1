@@ -6,10 +6,10 @@ export default class Dashboard extends Component {
     render() {
         const products = this.props.inventory.map((product, i) => {
             return <Product
-                key={i}
+                key={product.id}
                 name={product.name}
                 price={product.price}
-                img={product.imgUrl}
+                img={product.image_url}
             />
         })
 

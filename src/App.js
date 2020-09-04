@@ -37,7 +37,6 @@ class App extends Component {
         <Dashboard
           handleInventory={this.handleInventory}
           inventory={this.state.inventory}
-
         />
       </div>
     )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Axios from 'axios'
 
 export default class Form extends Component {
     constructor() {
@@ -6,11 +7,20 @@ export default class Form extends Component {
         this.state = {
             name: '',
             price: 0,
-            imgUrl: ''
+            image_url: ''
 
         }
 
+        this.addProduct = this.addProduct.bind(this)
+        this.handleReset = this.handleReset.bind(this)
+    }
 
+    addProduct() {
+        const { name, price, image_url } = this.state
+        Axios.post('/api/product', { name, price, image_url })
+
+        this.props.handleInventory()
+        this.handleReset()
     }
 
     handleName(name) {
@@ -22,25 +32,26 @@ export default class Form extends Component {
     }
 
     handleImageUrl(imgUrl) {
-        this.setState({ imgUrl: imgUrl })
+        this.setState({ image_url: imgUrl })
     }
 
-    handleCancel() {
+    handleReset() {
         this.setState({
             name: '',
             price: 0,
-            imgUrl: ''
+            image_url: ''
         })
     }
 
     render() {
+        const { name, price, image_url } = this.state
         return (
             <div>
-                <input onChange={e => { this.handleName(e.target.value) }} placeholder='Name' />
-                <input onChange={e => { this.handlePrice(e.target.value) }} placeholder='Price' />
-                <input onChange={e => { this.handleImageUrl(e.target.value) }} placeholder='Image Url' />
-                <button onClick={this.handleCancel}>Cancel</button>
-                <button>Add</button>
+                <input value={name} onChange={e => { this.handleName(e.target.value) }} placeholder='Name' />
+                <input value={price} onChange={e => { this.handlePrice(e.target.value) }} placeholder='Price' />
+                <input value={image_url} onChange={e => { this.handleImageUrl(e.target.value) }} placeholder='Image Url' />
+                <button onClick={this.handleReset}>Cancel</button>
+                <button onClick={this.addProduct}>Add</button>
             </div>
         )
     }

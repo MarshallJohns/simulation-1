@@ -5,7 +5,7 @@ export default class Product extends Component {
         const { name, price, img } = this.props
 
         return (
-            <div>
+            <div className='product'>
                 <img src={img} alt={`${name}`} />
                 <p>Name: {name}</p>
                 <p> Price: {price}</p>

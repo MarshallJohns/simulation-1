@@ -46,12 +46,23 @@ export default class Form extends Component {
     render() {
         const { name, price, image_url } = this.state
         return (
-            <div>
-                <input value={name} onChange={e => { this.handleName(e.target.value) }} placeholder='Name' />
-                <input value={price} onChange={e => { this.handlePrice(e.target.value) }} placeholder='Price' />
-                <input value={image_url} onChange={e => { this.handleImageUrl(e.target.value) }} placeholder='Image Url' />
-                <button onClick={this.handleReset}>Cancel</button>
-                <button onClick={this.addProduct}>Add</button>
+            <div className='form'>
+                <div className='input'>
+                    <p>Image Url:</p>
+                    <input value={image_url} onChange={e => { this.handleImageUrl(e.target.value) }} placeholder='Image Url' />
+                </div>
+                <div className='input'>
+                    <p>Product Name:</p>
+                    <input value={name} onChange={e => { this.handleName(e.target.value) }} placeholder='Name' />
+                </div>
+                <div className='input'>
+                    <p>Price: </p>
+                    <input value={price} onChange={e => { this.handlePrice(e.target.value) }} placeholder='Price' />
+                </div>
+                <div className='form-buttons'>
+                    <button onClick={this.handleReset}>Cancel</button>
+                    <button onClick={this.addProduct}>Add</button>
+                </div>
             </div>
         )
     }

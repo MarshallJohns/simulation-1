@@ -14,7 +14,7 @@ export default class Dashboard extends Component {
         })
 
         return (
-            <div>{products}</div>
+            <div className='products'>{products}</div>
         )
     }
 }

@@ -22,6 +22,18 @@ module.exports = {
             })
     },
 
+    editProduct: (req, res) => {
+        const db = req.app.get('db')
+        const { id } = req.params
+        const { name, price, image_url } = req.body
+
+        db.update_product([id, name, price, image_url]).then(() => res.sendStatus(200))
+            .catch(err => {
+                res.status(500).send('Could not edit Product')
+                console.log(err.message)
+            })
+    },
+
     deleteProduct: (req, res) => {
         const db = req.app.get('db')
         const { id } = req.params

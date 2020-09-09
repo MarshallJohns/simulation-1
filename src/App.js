@@ -9,15 +9,20 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      inventory: []
+      inventory: [],
+      current: {}
     }
 
     this.handleInventory = this.handleInventory.bind(this)
-
+    this.handleEdit = this.handleEdit.bind(this)
   }
 
   componentDidMount() {
     this.handleInventory()
+  }
+
+  handleEdit(product) {
+    this.setState({ current: product })
   }
 
   handleInventory() {
@@ -32,9 +37,11 @@ class App extends Component {
       <div className="App" >
         <Header />
         <Form
+          currentProduct={this.state.current}
           handleInventory={this.handleInventory}
         />
         <Dashboard
+          handleEdit={this.handleEdit}
           handleInventory={this.handleInventory}
           inventory={this.state.inventory}
         />

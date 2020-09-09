@@ -7,21 +7,52 @@ export default class Form extends Component {
         this.state = {
             name: '',
             price: 0,
-            image_url: ''
+            image_url: '',
+            edit: false
 
         }
 
         this.addProduct = this.addProduct.bind(this)
         this.handleReset = this.handleReset.bind(this)
+        this.updateProduct = this.updateProduct.bind(this)
+    }
+
+    componentDidUpdate(prevProps) {
+        const { currentProduct } = this.props
+        if (currentProduct !== prevProps.currentProduct) {
+            this.setState({
+                name: currentProduct.name,
+                price: currentProduct.price,
+                image_url: currentProduct.image_url,
+                edit: true
+
+            })
+        }
+    }
+
+    updateProduct(id) {
+        const { name, price, image_url } = this.state
+        Axios.put(`/api/product/${id}`, { name, price, image_url }).then(res => {
+            this.props.handleInventory()
+            this.handleReset()
+        }).catch(err => {
+            console.log(err.message)
+        })
+
+
     }
 
     addProduct() {
         const { name, price, image_url } = this.state
-        Axios.post('/api/product', { name, price, image_url })
+        Axios.post('/api/product', { name, price, image_url }).then(res => {
+            this.props.handleInventory()
+            this.handleReset()
 
-        this.props.handleInventory()
-        this.handleReset()
+        }).catch(err => [
+            console.log(err.message)
+        ])
     }
+
 
     handleName(name) {
         this.setState({ name: name })
@@ -32,14 +63,17 @@ export default class Form extends Component {
     }
 
     handleImageUrl(imgUrl) {
+
         this.setState({ image_url: imgUrl })
+
     }
 
     handleReset() {
         this.setState({
             name: '',
             price: 0,
-            image_url: ''
+            image_url: '',
+            edit: false
         })
     }
 
@@ -61,7 +95,7 @@ export default class Form extends Component {
                 </div>
                 <div className='form-buttons'>
                     <button onClick={this.handleReset}>Cancel</button>
-                    <button onClick={this.addProduct}>Add</button>
+                    {this.state.edit ? <button onClick={() => this.updateProduct(this.props.currentProduct.id)}>Save Changes</button> : <button onClick={this.addProduct}>Add Product</button>}
                 </div>
             </div>
         )

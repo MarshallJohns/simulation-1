@@ -20,12 +20,14 @@ export default class Dashboard extends Component {
     render() {
         const products = this.props.inventory.map((product, i) => {
             return <Product
+                handleEdit={this.props.handleEdit}
                 deleteProduct={this.deleteProduct}
                 id={product.id}
                 key={product.id}
                 name={product.name}
                 price={product.price}
                 img={product.image_url}
+                product={product}
             />
         })
 

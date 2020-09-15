@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
-export default class Form extends Component {
+class Form extends Component {
     constructor() {
         super()
         this.state = {
@@ -16,6 +16,21 @@ export default class Form extends Component {
         this.addProduct = this.addProduct.bind(this)
         this.handleReset = this.handleReset.bind(this)
         this.updateProduct = this.updateProduct.bind(this)
+    }
+
+    componentDidMount() {
+
+        let { id } = this.props.match.params
+        console.log(id)
+        if (id) {
+            Axios.get(`/api/product/${id}`).then(res => {
+
+                this.setState({
+                    ...res.data[0], edit: true
+                })
+            })
+        }
+
     }
 
     componentDidUpdate(prevProps) {
@@ -104,3 +119,5 @@ export default class Form extends Component {
         )
     }
 }
+
+export default withRouter(Form)

@@ -5,20 +5,42 @@ import Axios from 'axios'
 export default class Dashboard extends Component {
     constructor() {
         super()
-
+        this.state = {
+            inventory: [],
+        }
+        this.handleInventory = this.handleInventory.bind(this)
         this.deleteProduct = this.deleteProduct.bind(this)
+    }
+
+    componentDidMount() {
+        this.handleInventory()
+    }
+
+    componentDidUpdate(prevProps) {
+        const { inventory } = this.state
+        if (inventory !== prevProps.inventory) {
+            this.handleInventory()
+        }
+
     }
 
 
     deleteProduct(id) {
-        Axios.delete(`/api/product/${id}`)
+        Axios.delete(`/api/product/${id}`).then(res => {
+            this.handleInventory()
+        })
             .catch(err => console.log(err.message))
 
-        this.props.handleInventory()
+    }
+
+    handleInventory() {
+        Axios.get('/api/inventory')
+            .then(res => this.setState({ inventory: res.data }))
+            .catch(err => console.log(err.message))
     }
 
     render() {
-        const products = this.props.inventory.map((product, i) => {
+        const products = this.state.inventory.map((product, i) => {
             return <Product
                 handleEdit={this.props.handleEdit}
                 deleteProduct={this.deleteProduct}

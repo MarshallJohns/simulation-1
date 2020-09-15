@@ -9,8 +9,10 @@ export default class Product extends Component {
                 <img src={img} alt={`${name}`} />
                 <p>Name: {name}</p>
                 <p> Price: {price}</p>
-                <button onClick={() => deleteProduct(id)}>Delete</button>
-                <button onClick={() => handleEdit(product)}>Edit</button>
+                <div className='btns'>
+                    <button onClick={() => deleteProduct(id)}>Delete</button>
+                    <button onClick={() => handleEdit(product)}>Edit</button>
+                </div>
             </div>
         )
     }

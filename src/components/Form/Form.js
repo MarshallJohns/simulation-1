@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export default class Form extends Component {
     constructor() {
@@ -95,7 +96,9 @@ export default class Form extends Component {
                 </div>
                 <div className='form-buttons'>
                     <button onClick={this.handleReset}>Cancel</button>
-                    {this.state.edit ? <button onClick={() => this.updateProduct(this.props.currentProduct.id)}>Save Changes</button> : <button onClick={this.addProduct}>Add Product</button>}
+                    <Link to='/'>
+                        {this.state.edit ? <button onClick={() => this.updateProduct(this.props.currentProduct.id)}>Save Changes</button> : <button onClick={this.addProduct}>Add Product</button>}
+                    </Link>
                 </div>
             </div>
         )

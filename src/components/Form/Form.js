@@ -9,7 +9,8 @@ class Form extends Component {
             name: '',
             price: 0,
             image_url: '',
-            edit: false
+            edit: false,
+            id: null
 
         }
 
@@ -26,12 +27,14 @@ class Form extends Component {
             Axios.get(`/api/product/${id}`).then(res => {
 
                 this.setState({
-                    ...res.data[0], edit: true
+                    ...res.data[0], edit: true, id: this.props.match.params.id
                 })
             })
         }
 
     }
+
+
 
     componentDidUpdate(prevProps) {
         const { currentProduct } = this.props
@@ -46,8 +49,8 @@ class Form extends Component {
         }
     }
 
-    updateProduct(id) {
-        const { name, price, image_url } = this.state
+    updateProduct() {
+        const { name, price, image_url, id } = this.state
         Axios.put(`/api/product/${id}`, { name, price, image_url }).then(res => {
             this.props.handleInventory()
             this.handleReset()
@@ -112,7 +115,7 @@ class Form extends Component {
                 <div className='form-buttons'>
                     <button onClick={this.handleReset}>Cancel</button>
                     <Link to='/'>
-                        {this.state.edit ? <button onClick={() => this.updateProduct(this.props.currentProduct.id)}>Save Changes</button> : <button onClick={this.addProduct}>Add Product</button>}
+                        {this.state.edit ? <button onClick={() => this.updateProduct()}>Save Changes</button> : <button onClick={this.addProduct}>Add Product</button>}
                     </Link>
                 </div>
             </div>
